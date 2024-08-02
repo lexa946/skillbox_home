@@ -1,0 +1,96 @@
+{% extends 'shopapp/base_index.html' %}
+
+{% block Title %}
+Продукты
+{% endblock %}
+
+{% block Body %}
+
+
+<div class="row justify-content-center m-5">
+    <div class="col-4 text-center">
+        <h3>Наш ассортимент</h3>
+    </div>
+</div>
+{% if 'shopapp.add_product' in perms %}
+<div class="m-3">
+    <a href="{% url 'shopapp:create_product' %}" class="btn btn-primary">Создать продукт</a>
+</div>
+{% endif %}
+
+<h3 class="m-3">Пластики:</h3>
+<div class="d-flex justify-content-start flex-wrap">
+    {% for product in products %}
+        {% if product.category.name == 'Пластик' %}
+            <div class="card ms-3 mb-3 disabled"
+                 style="background:  linear-gradient({% cycle 'red' 'yellow' %}, {% cycle 'black' 'orange' %}); color: {% cycle 'white' 'black' %}">
+                <img src="..." class="card-img-top" alt="товар Img.">
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ product.properties.all.1.value }} пластик '{{ product.properties.all.0.value }}'
+                    </h5>
+
+
+                    <p class="card-text">
+                        {{ product.price }} руб.
+                        {% if product.discount > 0 %}
+                            <span style="background-color:yellow; color:black;  border-radius: 5px; padding:0 3px">Скидка {{ product.discount }}%</span>
+                        {% endif %}
+                    </p>
+
+
+                    <div class="d-flex flex-row justify-content-between">
+                        {% if not product.has_now %}
+                            <a href="#" class="btn btn-primary disabled">Нет в наличии</a>
+                        {% else %}
+                            <a href="{% url 'myauth:add_to_basket' pk=product.pk %}" class="btn btn-primary">В корзину</a>
+                        {% endif %}
+
+                        <a href="{% url 'shopapp:product_detail' pk=product.pk %}" class="btn btn-primary ms-3">Подробнее</a>
+
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<h3 class="m-3">Принтеры:</h3>
+<div class="d-flex justify-content-start flex-wrap">
+    {% for product in products %}
+    {% if product.category.name == 'Принтер' %}
+    <div class="card ms-3 mb-3 disabled"
+         style="background:  linear-gradient({% cycle 'red' 'yellow' %}, {% cycle 'black' 'orange' %}); color: {% cycle 'white' 'black' %}">
+        <img src="..." class="card-img-top" alt="товар Img.">
+        <div class="card-body">
+
+
+            <h5 class="card-title">{{ product.properties.all.0.value }}</h5>
+
+
+            <p class="card-text">
+                {{ product.price }} руб.
+                {% if product.discount > 0 %}
+                <span style="background-color:yellow; color:black;  border-radius: 5px; padding:0 3px">Скидка {{ product.discount }}%</span>
+                {% endif %}
+            </p>
+
+            <div class="d-flex flex-row justify-content-between">
+                {% if not product.has_now %}
+                <a href="#" class="btn btn-primary disabled">Нет в наличии</a>
+                {% else %}
+                <a href="{% url 'myauth:add_to_basket' pk=product.pk %}" class="btn btn-primary">В корзину</a>
+                {% endif%}
+                <a href="{% url 'shopapp:product_detail' pk=product.pk %}" class="btn btn-primary ms-3">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}

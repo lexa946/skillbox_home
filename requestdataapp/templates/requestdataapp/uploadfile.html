@@ -1,0 +1,20 @@
+{% extends 'requestdataapp/base.html' %}
+
+{% block title %}File upload{% endblock %}
+
+
+{% block body %}
+<h1>Загрузка файла</h1>
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <p>
+    {% if exception_text %}
+      <span style="color:red">Ошибка: {{ exception_text }}</span><br>
+    {% endif %}
+    <label for="myfile">Загрузите свою аватарку (ограничение по файлу 1мб)</label>
+    <input type="file" name="myfile" id="myfile" accept="image/*">
+  </p>
+  <button type="submit">Отправить</button>
+</form>
+
+{% endblock %}

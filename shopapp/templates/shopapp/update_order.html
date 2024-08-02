@@ -1,0 +1,24 @@
+{% extends 'shopapp/base_index.html' %}
+
+{% block Title %}
+Обновить Заказ
+{% endblock %}
+
+{%  block Body %}
+<div class="row justify-content-center mb-5">
+    <div class="col-4 text-center">
+        <h3>Обновить {{ object }}</h3>
+    </div>
+</div>
+
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Обновить</button>
+        <a href="{% url 'shopapp:order_detail' pk=object.pk %}" class="btn btn-primary">Вернуться к заказу #{{ object.pk }}</a>
+    </form>
+</div>
+
+{% endblock %}

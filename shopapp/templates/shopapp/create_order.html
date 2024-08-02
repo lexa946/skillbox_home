@@ -1,0 +1,23 @@
+{% extends 'shopapp/base_index.html' %}
+
+{% block Title %}
+Сформировать заказ
+{% endblock %}
+
+{%  block Body %}
+<div class="row justify-content-center mb-5">
+    <div class="col-4 text-center">
+        <h3>Создать заказ</h3>
+    </div>
+</div>
+
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</div>
+
+{% endblock %}

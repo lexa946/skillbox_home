@@ -1,0 +1,45 @@
+{% extends 'shopapp/base_index.html' %}
+
+{% block Title %}
+Заказы
+{% endblock %}
+
+
+{% block Body %}
+<div class="row justify-content-center mb-5">
+    <div class="col-4 text-center">
+        <h3>Заказы</h3>
+    </div>
+</div>
+<div class="mb-3">
+    <a href="{% url 'shopapp:create_order' %}" class="btn btn-primary">Создать заказ</a>
+</div>
+
+{% for order in orders%}
+<div class="card w-50 mb-5">
+    <div class="card-header d-flex justify-content-between">
+        <span>{{ order }}</span>
+        <span>{{ order.created_at|date:'d.m.Y H:i' }}</span>
+
+    </div>
+    <div class="card-body">
+        <p class="card-text"><b>Пользователь:</b> <a href="#" class="text-decoration-none">{{ order.user }}</a></p>
+        <p class="card-text"><b>Адрес доставки:</b> {{ order.delivery_address }} </p>
+        {% if order.comment %}<p class="card-text"><b>Комментарий:</b> {{ order.comment }} </p>{% endif %}
+        <p class="card-text"><b>Продукты:</b>
+            {% for product in order.products.all %}
+                <a class="btn btn-secondary btn-sm ms-1 mb-1" href="{% url 'shopapp:product_detail' pk=product.pk %}">{{ product }}</a>
+            {% endfor %}
+        </p>
+        <p class="card-text"><b>Сумма заказа:</b> {{ order.total_price }} р.</p>
+
+        <a href="#" class="btn btn-success">Взять в работу</a>
+        <a href="{% url 'shopapp:order_detail' pk=order.pk %}" class="btn btn-primary">Подробнее</a>
+    </div>
+</div>
+
+{% endfor %}
+
+
+
+{% endblock %}

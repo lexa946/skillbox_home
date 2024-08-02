@@ -1,0 +1,35 @@
+{% extends 'shopapp/base_index.html' %}
+
+{% block Title %}
+{{ order }}
+{% endblock %}
+
+{% block Body %}
+<div class="m-3">
+    <h3>{{ order }}</h3>
+
+    <div class="mt-2">
+        <div><b>Пользователь:</b> <em>{{ order.user }}</em></div>
+        <div><b>Адрес доставки:</b> <em>{{ order.delivery_address }}</em></div>
+        <div><b>Комментарий:</b> <em>{{ order.comment }}</em></div>
+        <div><b>Промокод:</b> <em>{{ order.promocode }}</em></div>
+        <div><b>Сумма заказа:</b> {{ order.total_price }} р.<div>
+        <div><b>Продукты:</b>
+            {% for product in order.products.all %}
+                <a class="btn btn-secondary btn-sm ms-1 mb-1" href="{% url 'shopapp:product_detail' pk=product.pk %}">{{ product }}</a>
+            {% endfor %}
+        <div>
+
+    </div>
+
+    <div class="mt-3">
+        <a href="{% url 'shopapp:update_order' pk=order.pk %}" class="btn btn-primary">Обновить</a>
+        <a href="{% url 'shopapp:delete_order' pk=order.pk %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'shopapp:orders' %}" class="btn btn-primary">Вернуться к заказам</a>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
